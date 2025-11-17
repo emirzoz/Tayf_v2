@@ -56,7 +56,7 @@ const Sponsor: React.FC<LangProps> = ({ getLangText }) => {
         <div className="text-center max-w-3xl mx-auto">
           <h2 className="text-4xl font-heading mb-4">{getLangText('sponsorIntroTitle')}</h2>
           <p className="text-xl opacity-90 mb-8">{getLangText('sponsorIntroSubtitle')}</p>
-          <a href="/ITU_Tayf_Tanitim_Dosyasi.pdf" download className="inline-block bg-blue_gray text-prussian_blue px-10 py-4 rounded-lg font-bold transition shadow-lg hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-[#6E92B6] hover:ring-2 hover:ring-[#6E92B6]">
+          <a href="./ITU_Tayf_Tanitim_Dosyasi.pdf" download className="inline-block bg-blue_gray text-prussian_blue px-10 py-4 rounded-lg font-bold transition shadow-lg hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-[#6E92B6] hover:ring-2 hover:ring-[#6E92B6]">
             {getLangText('sponsorIntroBtn')}
           </a>
         </div>

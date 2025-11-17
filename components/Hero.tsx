@@ -5,13 +5,13 @@ const Hero: React.FC<LangProps> = ({ getLangText }) => {
   return (
     <section id="hero" className="min-h-screen flex items-center justify-center text-timberwolf pt-20"
       style={{
-        background: `radial-gradient(ellipse at center, rgba(59, 91, 130, 0.6) 0%, rgba(6, 43, 70, 0.9) 100%), url('/images/iss033e009282~orig-min.jpg')`,
+        background: `radial-gradient(ellipse at center, rgba(59, 91, 130, 0.6) 0%, rgba(6, 43, 70, 0.9) 100%), url('./images/iss033e009282~orig-min.jpg')`,
         backgroundSize: 'cover',
         backgroundPosition: 'center center'
       }}>
       <div className="container mx-auto px-6 text-center py-8">
         <div className="flex flex-col items-center justify-center gap-3 md:gap-4">
-          <img src="/images/LogoWhite.png" alt={getLangText('logoAlt')} width="256" height="256" className="mx-auto mb-4 h-20 sm:h-24 md:h-28 lg:h-32 w-auto animate-logo-pop" loading="eager" decoding="async" />
+          <img src="./images/LogoWhite.png" alt={getLangText('logoAlt')} width="256" height="256" className="mx-auto mb-4 h-20 sm:h-24 md:h-28 lg:h-32 w-auto animate-logo-pop" loading="eager" decoding="async" />
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-heading font-bold mt-2 mb-4 md:mb-6 leading-tight drop-shadow animate-title-slide">
             {getLangText('heroTitle')}
           </h1>

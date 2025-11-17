@@ -51,7 +51,7 @@ const Join: React.FC<LangProps> = ({ getLangText }) => {
         <div className="solar hidden md:block">
           <div className="absolute inset-0 grid place-items-center" style={{zIndex:2, pointerEvents:'none'}}>
             <div className="w-28 h-28 rounded-full bg-prussian_blue/40 shadow-2xl shadow-[#6E92B6]/30 border border-[#6E92B6]/60 flex items-center justify-center overflow-hidden">
-              <img src="/images/LogoWhite.png" alt={getLangText('logoAlt')} className="w-20 h-20 object-contain" />
+              <img src="./images/LogoWhite.png" alt={getLangText('logoAlt')} className="w-20 h-20 object-contain" />
             </div>
           </div>
           {departments.map(dept => <span key={dept.key} className="orbit-ring" style={{'--orbit-scale': dept.scale} as React.CSSProperties}></span>)}

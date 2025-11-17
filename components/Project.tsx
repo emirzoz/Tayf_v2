@@ -165,12 +165,12 @@ const Project: React.FC<LangProps> = ({ getLangText }) => {
 
             <div id="panel-gallery" role="tabpanel" aria-labelledby="tab-gallery" className={activeTab === 'gallery' ? '' : 'hidden'}>
               <div className="grid grid-cols-2 gap-4">
-                <img src="/images/1.jpg" alt={getLangText('projectImageAlt1')} className="w-full h-48 object-contain rounded-lg shadow-lg bg-yinmn_blue" />
-                <img src="/images/5.jpeg" alt={getLangText('projectImageAlt2')} className="w-full h-48 object-contain rounded-lg shadow-lg bg-yinmn_blue" />
-                <img src="/images/7.jpg" alt={getLangText('projectImageAlt3')} className="w-full h-48 object-contain rounded-lg shadow-lg bg-yinmn_blue" />
-                <img src="/images/8.jpeg" alt={getLangText('projectImageAlt4')} className="w-full h-48 object-contain rounded-lg shadow-lg bg-yinmn_blue" />
+                <img src="./images/1.jpg" alt={getLangText('projectImageAlt1')} className="w-full h-48 object-contain rounded-lg shadow-lg bg-yinmn_blue" />
+                <img src="./images/5.jpeg" alt={getLangText('projectImageAlt2')} className="w-full h-48 object-contain rounded-lg shadow-lg bg-yinmn_blue" />
+                <img src="./images/7.jpg" alt={getLangText('projectImageAlt3')} className="w-full h-48 object-contain rounded-lg shadow-lg bg-yinmn_blue" />
+                <img src="./images/8.jpeg" alt={getLangText('projectImageAlt4')} className="w-full h-48 object-contain rounded-lg shadow-lg bg-yinmn_blue" />
               </div>
-              <img src="/images/6.png" alt={getLangText('projectImageAlt5')} className="w-full h-64 object-contain rounded-lg shadow-lg bg-yinmn_blue mt-4" />
+              <img src="./images/6.png" alt={getLangText('projectImageAlt5')} className="w-full h-64 object-contain rounded-lg shadow-lg bg-yinmn_blue mt-4" />
             </div>
 
             <div id="panel-3d" role="tabpanel" aria-labelledby="tab-3d" className={activeTab === '3d' ? '' : 'hidden'}>
