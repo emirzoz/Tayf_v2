@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>İTÜ TAYF - Model Uydu Takımı</title>
+  
+  <meta name="description" content="İTÜ TAYF, İstanbul Teknik Üniversitesi’nin model uydu takımı — sponsorlukla Ar-Ge’yi hızlandırın, marka görünürlüğü ve yetenek erişimi kazanın. / ITU Tayf is Istanbul Technical University’s model satellite team — sponsorship accelerates R&D, brand visibility, and talent access.">
+  
+  <link rel="icon" type="image/png" href="/images/LogoWhite.png">
+
+  <!-- Fonts + Tailwind -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@700&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            prussian_blue: '#062b46',
+            timberwolf: '#d7d3d3',
+            yinmn_blue: '#3b5b82',
+            blue_gray: '#6e92b6'
+          },
+          fontFamily: {
+            sans: ['Open Sans', 'sans-serif'],
+            heading: ['Exo 2', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Base styles */
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Open Sans', 'sans-serif'; }
+    h1, h2, h3, h4, h5, h6 { font-family: 'Exo 2', 'sans-serif'; font-weight: 700; }
+    
+    /* Anchor offset for fixed header */
+    section { scroll-margin-top: 80px; }
+
+    /* Hero animations */
+    @keyframes logo-pop { 0% {opacity:0; transform: translateY(6px) scale(.98);} 100% {opacity:1; transform: translateY(0) scale(1);} }
+    @keyframes title-slide { 0% {opacity:0; transform: translateY(8px);} 100% {opacity:1; transform: translateY(0);} }
+    .animate-logo-pop { animation: logo-pop .5s ease-out .05s both; }
+    .animate-title-slide { animation: title-slide .5s ease-out .12s both; }
+    .animate-subtitle-slide { animation: title-slide .5s ease-out .18s both; }
+    .animate-cta-fade { animation: title-slide .5s ease-out .26s both; }
+    @media (prefers-reduced-motion: reduce) { .animate-logo-pop, .animate-title-slide, .animate-subtitle-slide, .animate-cta-fade { animation: none !important; } }
+    
+    .tabular-nums { font-variant-numeric: tabular-nums; }
+    
+    /* Video aspect ratio */
+    .ratio-video { position: relative; padding-top: 56.25%; } /* 16:9 */
+    .ratio-video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+    
+    /* Join Section - Solar Orbits */
+    .solar {
+      position: relative;
+      --S: min(560px, 90vw);
+      --R: calc(var(--S) * 0.5);
+      width: var(--S);
+      height: var(--S);
+      margin-inline: auto;
+      isolation: isolate;
+    }
+    .orbit-ring {
+      position: absolute;
+      inset: 0;
+      border: 1px dashed rgba(110,146,182,.35);
+      border-radius: 9999px;
+      transform: scale(var(--orbit-scale));
+      transform-origin: 50% 50%;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .orbit-lane {
+      position: absolute;
+      inset: 0;
+    }
+    .orbit-wrapper {
+      position: absolute;
+      inset: 0;
+      transform-origin: 50% 50%;
+      animation: orbit-spin var(--dur, 40s) linear infinite;
+      pointer-events: none;
+      z-index: 3;
+    }
+    .orbit-wrapper.paused {
+      animation-play-state: paused;
+    }
+    @keyframes orbit-spin {
+      to { transform: rotate(360deg); }
+    }
+    .planet {
+      --size: 35px;
+      --c1: #6E92B6;
+      --c2: #3b5b82;
+      --c3: #2a3f5b;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) translateX(calc(var(--R) * var(--orbit-scale)));
+      border-radius: 9999px;
+      width: var(--size);
+      height: var(--size);
+      background: radial-gradient(circle at 30% 30%, var(--c1) 0%, var(--c2) 60%, var(--c3) 100%);
+      box-shadow: 0 0 0 2px rgba(110,146,182,.5), 0 8px 18px rgba(110,146,182,.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      pointer-events: auto;
+      transition: transform .25s ease, box-shadow .25s ease, filter .25s ease;
+    }
+    .planet-icon {
+      width: 60%;
+      height: 60%;
+      color: #020617;
+    }
+    .planet:hover {
+      transform: translate(-50%, -50%) translateX(calc(var(--R) * var(--orbit-scale))) scale(1.18);
+      box-shadow: 0 0 0 3px rgba(191,219,254,.9), 0 12px 24px rgba(110,146,182,.35);
+      filter: brightness(1.1);
+    }
+
+    /* Join Section - Mobile Cards */
+    .join-card {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 16px;
+      border-radius: 14px;
+      background: rgba(6,43,70,.6);
+      border: 1px solid rgba(110,146,182,.4);
+      color: #d7d9d3;
+      font-weight: 600;
+      transition: transform .2s ease, box-shadow .2s ease, opacity .2s ease;
+    }
+    .join-card:hover {
+      transform: translateY(-2px);
+      opacity: .95;
+      box-shadow: 0 8px 22px rgba(110,146,182,.15);
+    }
+    .join-card:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 3px #6E92B6;
+    }
+    .icon-join {
+      width: 1.25rem;
+      height: 1.25rem;
+      margin-right: .5rem;
+      color: #6E92B6;
+      stroke-width: 2;
+      flex-shrink: 0;
+    }
+    /* Hide scrollbar */
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    
+    /* Project Timeline - Horizontal */
+    .timeline-container-h {
+      position: relative;
+      width: 100%;
+      margin: 4rem auto 0;
+      padding: 0 15px 2rem 0;
+    }
+    .timeline-container-h::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 30px;
+      width: 100%;
+      height: 4px;
+      background-color: #3b5b82;
+      border-radius: 2px;
+      transform-origin: left;
+      transition: transform 1s ease-out;
+      transform: scaleX(0);
+    }
+    .timeline-container-h.timeline-visible::before {
+      transform: scaleX(1);
+    }
+    .timeline-container-h::after {
+      content: '';
+      position: absolute;
+      right: -5px;
+      bottom: 25px;
+      width: 12px;
+      height: 12px;
+      border-top: 4px solid #6e92b6;
+      border-right: 4px solid #6e92b6;
+      transform: translateX(10px) rotate(45deg);
+      opacity: 0;
+      transition: opacity 0.4s ease-out 1s, transform 0.4s ease-out 1s;
+    }
+    .timeline-container-h.timeline-visible::after {
+      opacity: 1;
+      transform: translateX(0) rotate(45deg);
+    }
+    .timeline-items-wrapper {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      position: relative;
+    }
+    .timeline-item-h {
+      display: flex;
+      flex-direction: column-reverse;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    }
+    .timeline-container-h.timeline-visible .timeline-item-h {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .timeline-content-h {
+      margin-bottom: 1rem;
+    }
+    .timeline-dot-h {
+      width: 28px;
+      height: 28px;
+      border: 4px solid #3b5b82;
+      background-color: #062b46;
+      border-radius: 50%;
+      z-index: 1;
+      flex-shrink: 0; /* Prevents the dot from shrinking */
+    }
+
+    @media (max-width: 640px) {
+      .timeline-content-h p:first-child { font-size: 0.875rem; }
+      .timeline-content-h p:last-child { font-size: 0.75rem; }
+    }
+
+  </style>
+<script type="importmap">
+{
+  "imports": {
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/"
+  }
+}
+</script>
+</head>
+<body class="bg-prussian_blue text-timberwolf">
+  <div id="root"></div>
+  
+  <!-- SVG SPRITE: reused department icons (hidden) -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+    <symbol id="icon-mekanik" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+    </symbol>
+    <symbol id="icon-elektronik" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 9h6v6H9V9z"/>
+    </symbol>
+    <symbol id="icon-ucus" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+    </symbol>
+    <symbol id="icon-yer" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0"/>
+    </symbol>
+    <symbol id="icon-org" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0"/>
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+    </symbol>
+  </svg>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>
