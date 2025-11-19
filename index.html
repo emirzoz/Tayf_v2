@@ -284,34 +284,7 @@
     </symbol>
   </svg>
 
-  <!-- Load the Vite entry in development, but fall back to the pre-bundled asset in production/static hosting -->
-  <script>
-    (function loadApp() {
-      const hostname = window.location.hostname;
-      const isLocalDev = hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '::1';
-      const script = document.createElement('script');
-      script.onerror = function handleError(event) {
-        console.error('İTÜ TAYF uygulaması yüklenemedi.', event?.error || event);
-        const root = document.getElementById('root');
-        if (root && !root.querySelector('[data-app-error]')) {
-          const errorMessage = document.createElement('p');
-          errorMessage.dataset.appError = 'true';
-          errorMessage.className = 'mt-4 text-red-200 text-sm';
-          errorMessage.textContent = 'Uygulama yüklenirken bir hata oluştu. Lütfen sayfayı yenileyin.';
-          root.appendChild(errorMessage);
-        }
-      };
-
-      if (isLocalDev) {
-        script.type = 'module';
-        script.src = './src/main.tsx';
-      } else {
-        script.defer = true;
-        script.src = './assets/app.js';
-      }
-
-      document.body.appendChild(script);
-    })();
-  </script>
+  <!-- The app is bundled by Vite, so we only need to load the compiled entry point -->
+  <script type="module" src="./index.tsx"></script>
 </body>
 </html>
