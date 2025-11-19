@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 
-const mountApp = () => {
+export const mountApp = () => {
   const rootElement = document.getElementById('root');
   if (!rootElement) {
     console.error('İTÜ TAYF root element is missing, retrying...');
