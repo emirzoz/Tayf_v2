@@ -1,280 +1,976 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>İTÜ TAYF - Model Uydu Takımı</title>
-  
-  <meta name="description" content="İTÜ TAYF, İstanbul Teknik Üniversitesi’nin model uydu takımı — sponsorlukla Ar-Ge’yi hızlandırın, marka görünürlüğü ve yetenek erişimi kazanın. / ITU Tayf is Istanbul Technical University’s model satellite team — sponsorship accelerates R&D, brand visibility, and talent access.">
-  
-  <link rel="icon" type="image/png" href="./images/LogoWhite.png">
-
-  <!-- Fonts + Tailwind -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@700&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            prussian_blue: '#062b46',
-            timberwolf: '#d7d3d3',
-            yinmn_blue: '#3b5b82',
-            blue_gray: '#6e92b6'
-          },
-          fontFamily: {
-            sans: ['Open Sans', 'sans-serif'],
-            heading: ['Exo 2', 'sans-serif']
-          }
-        }
-      }
-    }
-  </script>
+  <meta name="description" content="İTÜ TAYF, İstanbul Teknik Üniversitesi’nin model uydu takımı — sponsorlukla Ar-Ge’yi hızlandırın, marka görünürlüğü ve yetenek erişimi kazanın." />
+  <link rel="icon" type="image/png" href="./images/LogoWhite.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@700&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles/tailwind-lite.css" />
   <style>
-    /* Base styles */
     html { scroll-behavior: smooth; }
-    body { font-family: 'Open Sans', 'sans-serif'; }
+    body { font-family: 'Open Sans', 'sans-serif'; background-color: #041a2e; }
     h1, h2, h3, h4, h5, h6 { font-family: 'Exo 2', 'sans-serif'; font-weight: 700; }
-    
-    /* Anchor offset for fixed header */
-    section { scroll-margin-top: 80px; }
-
-    /* Hero animations */
+    section { scroll-margin-top: 90px; }
     @keyframes logo-pop { 0% {opacity:0; transform: translateY(6px) scale(.98);} 100% {opacity:1; transform: translateY(0) scale(1);} }
     @keyframes title-slide { 0% {opacity:0; transform: translateY(8px);} 100% {opacity:1; transform: translateY(0);} }
+    @keyframes spin { to { transform: rotate(360deg); } }
     .animate-logo-pop { animation: logo-pop .5s ease-out .05s both; }
     .animate-title-slide { animation: title-slide .5s ease-out .12s both; }
     .animate-subtitle-slide { animation: title-slide .5s ease-out .18s both; }
     .animate-cta-fade { animation: title-slide .5s ease-out .26s both; }
-    @media (prefers-reduced-motion: reduce) { .animate-logo-pop, .animate-title-slide, .animate-subtitle-slide, .animate-cta-fade { animation: none !important; } }
-    
-    .tabular-nums { font-variant-numeric: tabular-nums; }
-    
-    /* Video aspect ratio */
-    .ratio-video { position: relative; padding-top: 56.25%; } /* 16:9 */
-    .ratio-video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
-    
-    /* Join Section - Solar Orbits */
-    .solar {
-      position: relative;
-      --S: min(560px, 90vw);
-      --R: calc(var(--S) * 0.5);
-      width: var(--S);
-      height: var(--S);
-      margin-inline: auto;
-      isolation: isolate;
-    }
-    .orbit-ring {
-      position: absolute;
-      inset: 0;
-      border: 1px dashed rgba(110,146,182,.35);
-      border-radius: 9999px;
-      transform: scale(var(--orbit-scale));
-      transform-origin: 50% 50%;
-      pointer-events: none;
-      z-index: 1;
-    }
-    .orbit-lane {
-      position: absolute;
-      inset: 0;
-    }
-    .orbit-wrapper {
-      position: absolute;
-      inset: 0;
-      transform-origin: 50% 50%;
-      animation: orbit-spin var(--dur, 40s) linear infinite;
-      pointer-events: none;
-      z-index: 3;
-    }
-    .orbit-wrapper.paused {
-      animation-play-state: paused;
-    }
-    @keyframes orbit-spin {
-      to { transform: rotate(360deg); }
-    }
-    .planet {
-      --size: 35px;
-      --c1: #6E92B6;
-      --c2: #3b5b82;
-      --c3: #2a3f5b;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) translateX(calc(var(--R) * var(--orbit-scale)));
-      border-radius: 9999px;
-      width: var(--size);
-      height: var(--size);
-      background: radial-gradient(circle at 30% 30%, var(--c1) 0%, var(--c2) 60%, var(--c3) 100%);
-      box-shadow: 0 0 0 2px rgba(110,146,182,.5), 0 8px 18px rgba(110,146,182,.15);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      pointer-events: auto;
-      transition: transform .25s ease, box-shadow .25s ease, filter .25s ease;
-    }
-    .planet-icon {
-      width: 60%;
-      height: 60%;
-      color: #020617;
-    }
-    .planet:hover {
-      transform: translate(-50%, -50%) translateX(calc(var(--R) * var(--orbit-scale))) scale(1.18);
-      box-shadow: 0 0 0 3px rgba(191,219,254,.9), 0 12px 24px rgba(110,146,182,.35);
-      filter: brightness(1.1);
-    }
-
-    /* Join Section - Mobile Cards */
-    .join-card {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 14px 16px;
-      border-radius: 14px;
-      background: rgba(6,43,70,.6);
-      border: 1px solid rgba(110,146,182,.4);
-      color: #d7d9d3;
-      font-weight: 600;
-      transition: transform .2s ease, box-shadow .2s ease, opacity .2s ease;
-    }
-    .join-card:hover {
-      transform: translateY(-2px);
-      opacity: .95;
-      box-shadow: 0 8px 22px rgba(110,146,182,.15);
-    }
-    .join-card:focus-visible {
-      outline: none;
-      box-shadow: 0 0 0 3px #6E92B6;
-    }
-    .icon-join {
-      width: 1.25rem;
-      height: 1.25rem;
-      margin-right: .5rem;
-      color: #6E92B6;
-      stroke-width: 2;
-      flex-shrink: 0;
-    }
-    /* Hide scrollbar */
-    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-    .no-scrollbar::-webkit-scrollbar { display: none; }
-    
-    /* Project Timeline - Horizontal */
-    .timeline-container-h {
-      position: relative;
-      width: 100%;
-      margin: 4rem auto 0;
-      padding: 0 15px 2rem 0;
-    }
-    .timeline-container-h::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      bottom: 30px;
-      width: 100%;
-      height: 4px;
-      background-color: #3b5b82;
-      border-radius: 2px;
-      transform-origin: left;
-      transition: transform 1s ease-out;
-      transform: scaleX(0);
-    }
-    .timeline-container-h.timeline-visible::before {
-      transform: scaleX(1);
-    }
-    .timeline-container-h::after {
-      content: '';
-      position: absolute;
-      right: -5px;
-      bottom: 25px;
-      width: 12px;
-      height: 12px;
-      border-top: 4px solid #6e92b6;
-      border-right: 4px solid #6e92b6;
-      transform: translateX(10px) rotate(45deg);
-      opacity: 0;
-      transition: opacity 0.4s ease-out 1s, transform 0.4s ease-out 1s;
-    }
-    .timeline-container-h.timeline-visible::after {
-      opacity: 1;
-      transform: translateX(0) rotate(45deg);
-    }
-    .timeline-items-wrapper {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      position: relative;
-    }
-    .timeline-item-h {
-      display: flex;
-      flex-direction: column-reverse;
-      align-items: center;
-      text-align: center;
-      position: relative;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.5s ease-out, transform 0.5s ease-out;
-    }
-    .timeline-container-h.timeline-visible .timeline-item-h {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .timeline-content-h {
-      margin-bottom: 1rem;
-    }
-    .timeline-dot-h {
-      width: 28px;
-      height: 28px;
-      border: 4px solid #3b5b82;
-      background-color: #062b46;
-      border-radius: 50%;
-      z-index: 1;
-      flex-shrink: 0; /* Prevents the dot from shrinking */
-    }
-
-    @media (max-width: 640px) {
-      .timeline-content-h p:first-child { font-size: 0.875rem; }
-      .timeline-content-h p:last-child { font-size: 0.75rem; }
-    }
-
+    @media (prefers-reduced-motion: reduce) { .animate-logo-pop, .animate-title-slide, .animate-subtitle-slide, .animate-cta-fade, .orbit-wrapper { animation: none !important; } }
+    .timeline-container-h { position: relative; width: 100%; margin: 4rem auto 0; padding: 0 15px 2rem 0; }
+    .timeline-container-h::before { content: ''; position: absolute; left: 0; bottom: 30px; width: 100%; height: 4px; background-color: #3b5b82; border-radius: 2px; transform-origin: left; transition: transform 1s ease-out; transform: scaleX(0); }
+    .timeline-container-h.timeline-visible::before { transform: scaleX(1); }
+    .timeline-container-h::after { content: ''; position: absolute; right: -5px; bottom: 25px; width: 12px; height: 12px; border-top: 4px solid #6e92b6; border-right: 4px solid #6e92b6; transform: translateX(10px) rotate(45deg); opacity: 0; transition: opacity 0.4s ease-out 1s, transform 0.4s ease-out 1s; }
+    .timeline-container-h.timeline-visible::after { opacity: 1; transform: translateX(0) rotate(45deg); }
+    .timeline-items-wrapper { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); position: relative; gap: 1rem; }
+    .timeline-item-h { display: flex; flex-direction: column-reverse; align-items: center; text-align: center; position: relative; opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease-out, transform 0.5s ease-out; }
+    .timeline-container-h.timeline-visible .timeline-item-h { opacity: 1; transform: translateY(0); }
+    .timeline-dot-h { width: 28px; height: 28px; border: 4px solid #3b5b82; background-color: #062b46; border-radius: 50%; z-index: 1; flex-shrink: 0; }
+    @media (max-width: 768px) { .timeline-items-wrapper { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (max-width: 640px) { .timeline-items-wrapper { grid-template-columns: repeat(1, minmax(0, 1fr)); } }
+    .solar { position: relative; --S: min(520px, 90vw); --R: calc(var(--S) * 0.45); width: var(--S); height: var(--S); margin-inline: auto; isolation: isolate; }
+    .orbit-ring { position: absolute; inset: 0; border: 1px dashed rgba(110,146,182,.35); border-radius: 9999px; pointer-events: none; }
+    .orbit-wrapper { position: absolute; inset: 0; transform-origin: 50% 50%; animation: orbit-spin var(--dur, 36s) linear infinite; pointer-events: none; }
+    .planet { --size: 38px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) translateX(calc(var(--R) * var(--orbit-scale))); border-radius: 9999px; width: var(--size); height: var(--size); background: radial-gradient(circle at 30% 30%, #6E92B6 0%, #3b5b82 60%, #2a3f5b 100%); box-shadow: 0 0 0 2px rgba(110,146,182,.5), 0 8px 18px rgba(110,146,182,.2); display: flex; align-items: center; justify-content: center; transition: transform .25s ease, box-shadow .25s ease, filter .25s ease; }
+    .planet:hover { transform: translate(-50%, -50%) translateX(calc(var(--R) * var(--orbit-scale))) scale(1.15); box-shadow: 0 0 0 3px rgba(191,219,254,.9), 0 12px 24px rgba(110,146,182,.35); filter: brightness(1.05); }
+    .planet-icon { width: 60%; height: 60%; color: #020617; }
+    .join-card { display: inline-flex; align-items: center; justify-content: center; padding: 14px 16px; border-radius: 14px; background: rgba(6,43,70,.6); border: 1px solid rgba(110,146,182,.4); color: #d7d9d3; font-weight: 600; transition: transform .2s ease, box-shadow .2s ease, opacity .2s ease; }
+    .join-card:hover { transform: translateY(-2px); opacity: .95; box-shadow: 0 8px 22px rgba(110,146,182,.15); }
+    .join-card:focus-visible { outline: none; box-shadow: 0 0 0 3px #6E92B6; }
   </style>
-<script type="importmap">
-{
-  "imports": {
-    "react": "https://esm.sh/react@18.2.0",
-    "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
-    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
-    "react/": "https://aistudiocdn.com/react@^19.2.0/"
-  }
-}
-</script>
-<!-- Babel for client-side TSX transpilation -->
-<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 </head>
 <body class="bg-prussian_blue text-timberwolf">
-  <div id="root"></div>
-  
-  <!-- SVG SPRITE: reused department icons (hidden) -->
+  <header class="fixed inset-x-0 top-0 z-50 backdrop-blur border-b border-[#6E92B6]/60 bg-[#061a30]/80">
+    <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
+      <a href="#hero" class="text-2xl font-heading font-bold focus:outline-none focus:ring-2 focus:ring-[#6E92B6] rounded" data-i18n="heroTitle">İTÜ TAYF: Yörüngedeki İmzamız</a>
+      <nav class="hidden md:flex items-center gap-6 text-sm">
+        <a href="#project" class="hover:text-[#6E92B6] transition" data-i18n="navProject">Proje</a>
+        <a href="#team" class="hover:text-[#6E92B6] transition" data-i18n="navTeam">Ekip</a>
+        <a href="#sponsor" class="hover:text-[#6E92B6] transition" data-i18n="navSponsor">Sponsorluk</a>
+        <a href="#join" class="hover:text-[#6E92B6] transition" data-i18n="navJoin">Takıma Katıl</a>
+        <a href="#contact" class="hover:text-[#6E92B6] transition" data-i18n="navContact">İletişim</a>
+        <div class="flex items-center gap-2 ml-4 border-l border-[#6E92B6]/40 pl-4">
+          <button class="font-semibold text-timberwolf" data-lang-toggle="tr" aria-pressed="true">TR</button>
+          <span class="text-[#6E92B6]">|</span>
+          <button class="font-semibold text-timberwolf/70" data-lang-toggle="en" aria-pressed="false">EN</button>
+        </div>
+      </nav>
+      <button class="md:hidden inline-flex items-center justify-center p-2 rounded-md text-timberwolf hover:bg-[#6E92B6]/20 focus:outline-none focus:ring-2 focus:ring-[#6E92B6]" data-menu-toggle data-i18n-attr data-i18n-attr="aria-label" data-i18n-key="menuAriaLabel" aria-label="Menü">
+        <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+    <div class="md:hidden">
+      <div class="fixed inset-0 bg-black/50 opacity-0 pointer-events-none transition" data-menu-backdrop></div>
+      <div class="fixed inset-y-0 right-0 w-64 bg-prussian_blue border-l border-[#6E92B6]/50 transform translate-x-full transition" data-mobile-menu>
+        <div class="h-20 flex items-center px-6 border-b border-[#6E92B6]/40 text-lg font-heading">İTÜ TAYF</div>
+        <nav class="px-6 py-4 flex flex-col gap-4 text-base">
+          <a href="#project" class="hover:text-[#6E92B6]" data-i18n="navProject">Proje</a>
+          <a href="#team" class="hover:text-[#6E92B6]" data-i18n="navTeam">Ekip</a>
+          <a href="#sponsor" class="hover:text-[#6E92B6]" data-i18n="navSponsor">Sponsorluk</a>
+          <a href="#join" class="hover:text-[#6E92B6]" data-i18n="navJoin">Takıma Katıl</a>
+          <a href="#contact" class="hover:text-[#6E92B6]" data-i18n="navContact">İletişim</a>
+        </nav>
+        <div class="mt-auto px-6 py-4 border-t border-[#6E92B6]/40 flex items-center gap-2">
+          <button class="font-semibold text-timberwolf" data-lang-toggle="tr">TR</button>
+          <span class="text-[#6E92B6]">|</span>
+          <button class="font-semibold text-timberwolf/70" data-lang-toggle="en">EN</button>
+        </div>
+      </div>
+    </div>
+  </header>
+  </header>
+
+  <main class="pt-20">
+    <section id="hero" class="min-h-screen flex items-center justify-center text-center" style="background: radial-gradient(ellipse at center, rgba(59, 91, 130, 0.6) 0%, rgba(6, 43, 70, 0.9) 100%), url('./images/iss033e009282~orig-min.jpg'); background-size: cover; background-position: center;">
+      <div class="max-w-4xl mx-auto px-6 py-16 flex flex-col items-center gap-6">
+        <img src="./images/LogoWhite.png" alt="İTÜ TAYF Logosu" width="256" height="256" class="h-28 w-auto animate-logo-pop" data-i18n-attr data-i18n-attr="alt" data-i18n-key="logoAlt" />
+        <h1 class="text-4xl sm:text-5xl md:text-6xl font-heading animate-title-slide" data-i18n="heroTitle">İTÜ TAYF: Yörüngedeki İmzamız</h1>
+        <p class="text-lg sm:text-xl md:text-2xl opacity-90 animate-subtitle-slide" data-i18n="heroSubtitle">İstanbul Teknik Üniversitesi Uçak ve Uzay Bilimleri Fakültesi bünyesinde, TEKNOFEST için uydu teknolojileri geliştiriyoruz.</p>
+        <div class="flex flex-wrap justify-center gap-4 animate-cta-fade">
+          <a href="#project" class="bg-blue_gray text-prussian_blue px-8 py-3 rounded-lg font-semibold shadow-lg hover:opacity-90 transition" data-i18n="heroBtnProject">Projemizi Keşfedin</a>
+          <a href="#sponsor" class="border-2 border-blue_gray text-timberwolf px-8 py-3 rounded-lg font-semibold hover:bg-blue_gray/10 transition" data-i18n="heroBtnSponsor">Bize Destek Olun (Sponsorluk)</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="metrics" class="bg-gradient-to-br from-yinmn_blue to-prussian_blue border-t border-[#6E92B6]/30">
+      <div class="max-w-6xl mx-auto px-6 py-12 grid grid-cols-2 md:grid-cols-5 gap-6 text-center">
+        <div class="space-y-2">
+          <div class="text-4xl md:text-5xl font-heading tabular-nums"><span data-countup data-countup-target="12">12</span>+</div>
+          <p class="text-timberwolf/80" data-i18n="metricsTest">Uçuş/Yer testi</p>
+        </div>
+        <div class="space-y-2">
+          <div class="text-4xl md:text-5xl font-heading tabular-nums"><span data-countup data-countup-target="1800000" data-countup-compact="true">1.8M</span>+</div>
+          <p class="text-timberwolf/80" data-i18n="metricsAccess">Yıllık erişim</p>
+        </div>
+        <div class="space-y-2">
+          <div class="text-4xl md:text-5xl font-heading tabular-nums"><span data-countup data-countup-target="25">25</span></div>
+          <p class="text-timberwolf/80" data-i18n="metricsMembers">Aktif üye</p>
+        </div>
+        <div class="space-y-2">
+          <div class="text-4xl md:text-5xl font-heading tabular-nums"><span data-countup data-countup-target="9">9</span></div>
+          <p class="text-timberwolf/80" data-i18n="metricsPartners">Sanayi ortağı</p>
+        </div>
+        <div class="space-y-2">
+          <div class="text-4xl md:text-5xl font-heading tabular-nums"><span data-countup data-countup-target="600">600</span>+</div>
+          <p class="text-timberwolf/80" data-i18n="metricsHours">Atolye saati / dönem</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="project" class="py-16 md:py-20 bg-gradient-to-b from-prussian_blue to-[#031324] border-t border-[#6E92B6]/30">
+      <div class="max-w-6xl mx-auto px-6 grid lg:grid-cols-2 gap-12 items-start">
+        <div>
+          <p class="text-[#6E92B6] text-sm uppercase tracking-[0.2em]">TEKNOFEST</p>
+          <h2 class="text-4xl font-heading mt-2 mb-6" data-i18n="projectTitle">TEKNOFEST Model Uydu Projemiz</h2>
+          <p class="text-lg leading-relaxed opacity-90" data-i18n="projectText">İTÜ Tayf ekibi...</p>
+          <div class="mt-8 pt-6 border-t border-[#6E92B6]/30 space-y-6">
+            <div>
+              <h3 class="text-2xl font-heading mb-3 text-[#6E92B6]" data-i18n="projectAchievementsTitle">Başarılarımız</h3>
+              <ul class="list-disc pl-5 space-y-2 text-timberwolf/90">
+                <li data-i18n="ach1">2023 Teknofest Model Uydu...</li>
+                <li data-i18n="ach2">2022’de kuruldu...</li>
+                <li data-i18n="ach3">2024–2025’te uydumuzu...</li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="text-2xl font-heading mb-3 text-[#6E92B6]" data-i18n="projectGoalsTitle">Hedeflerimiz</h3>
+              <ul class="list-disc pl-5 space-y-2 text-timberwolf/90">
+                <li data-i18n="goal1">2025–2026’ta ABD/Avrupa...</li>
+                <li data-i18n="goal2">TEKNOFEST Model Uydu’da...</li>
+                <li data-i18n="goal3">Yeni AR-GE projelerini...</li>
+              </ul>
+            </div>
+            <div class="flex flex-wrap gap-3">
+              <span class="px-3 py-1 rounded-lg bg-white/5 border border-white/10" data-i18n="badgeFounded">Kuruluş: 2022</span>
+              <span class="px-3 py-1 rounded-lg bg-white/5 border border-white/10"><span data-i18n="badgeDRScorePrefix">DR Skoru: </span><span data-countup data-countup-target="96.5" data-countup-decimals="1">96.5</span>/100</span>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-2xl font-heading" data-i18n="galleryTitle">Uydu Modelimiz</h3>
+            <div class="flex gap-2 text-sm">
+              <button class="px-3 py-1 rounded border border-[#6E92B6]/40 bg-[#6E92B6]/20" data-tab="gallery" aria-selected="true" data-i18n="tabGallery">Galeri</button>
+              <button class="px-3 py-1 rounded border border-transparent hover:border-[#6E92B6]/40" data-tab="model" data-i18n="tab3D">3B Model</button>
+            </div>
+          </div>
+          <div data-tab-panel="gallery">
+            <div class="grid grid-cols-2 gap-3">
+              <img src="./images/1.jpg" alt="Uydu render – ön görünüm" class="w-full h-44 object-cover rounded-lg bg-black/20" data-i18n-attr data-i18n-attr="alt" data-i18n-key="projectImageAlt1" />
+              <img src="./images/5.jpeg" alt="Uydu render – detay" class="w-full h-44 object-cover rounded-lg bg-black/20" data-i18n-attr data-i18n-attr="alt" data-i18n-key="projectImageAlt2" />
+              <img src="./images/7.jpg" alt="Uydu render – yanal görünüm" class="w-full h-44 object-cover rounded-lg bg-black/20" data-i18n-attr data-i18n-attr="alt" data-i18n-key="projectImageAlt3" />
+              <img src="./images/8.jpeg" alt="Uydu render – bileşen yakın plan" class="w-full h-44 object-cover rounded-lg bg-black/20" data-i18n-attr data-i18n-attr="alt" data-i18n-key="projectImageAlt4" />
+            </div>
+            <img src="./images/6.png" alt="Uydu render – genel görünüm" class="w-full h-56 object-contain rounded-xl bg-black/20 mt-4" data-i18n-attr data-i18n-attr="alt" data-i18n-key="projectImageAlt5" />
+          </div>
+          <div data-tab-panel="model" class="hidden">
+            <div class="ratio-video rounded-xl overflow-hidden border border-[#6E92B6]/40 bg-white/5">
+              <iframe title="3D Satellite Model" src="https://sketchfab.com/models/9a7ad3344edb4e598de848a5badb7416/embed?ui_theme=dark" loading="lazy" allow="autoplay; fullscreen; xr-spatial-tracking" allowfullscreen></iframe>
+            </div>
+            <p class="text-sm text-timberwolf/70 mt-3" data-i18n="hintPan">İpucu: Parmağınızla çevirin, iki parmakla yakınlaştırın.</p>
+          </div>
+        </div>
+      </div>
+      <div class="max-w-5xl mx-auto px-6">
+        <div class="mt-16">
+          <h3 class="text-3xl font-heading text-center text-[#6E92B6]" data-i18n="projectTimelineTitle">Proje Takvimi</h3>
+          <div class="timeline-container-h" data-timeline>
+            <div class="timeline-items-wrapper">
+              <div class="timeline-item-h">
+                <div class="timeline-content-h">
+                  <p class="font-bold text-lg" data-i18n="timelineItem1Date">23 Ocak</p>
+                  <p class="text-timberwolf/80" data-i18n="timelineItem1Desc">Şartname Yayını</p>
+                </div>
+                <div class="timeline-dot-h"></div>
+              </div>
+              <div class="timeline-item-h">
+                <div class="timeline-content-h">
+                  <p class="font-bold text-lg" data-i18n="timelineItem2Date">1 Mayıs</p>
+                  <p class="text-timberwolf/80" data-i18n="timelineItem2Desc">Kritik Tasarım Raporu (KTR)</p>
+                </div>
+                <div class="timeline-dot-h"></div>
+              </div>
+              <div class="timeline-item-h">
+                <div class="timeline-content-h">
+                  <p class="font-bold text-lg" data-i18n="timelineItem3Date">10 Mayıs</p>
+                  <p class="text-timberwolf/80" data-i18n="timelineItem3Desc">Uçuşa Hazırlık Raporu (UHR)</p>
+                </div>
+                <div class="timeline-dot-h"></div>
+              </div>
+              <div class="timeline-item-h">
+                <div class="timeline-content-h">
+                  <p class="font-bold text-lg" data-i18n="timelineItem4Date">20 Ağustos</p>
+                  <p class="text-timberwolf/80" data-i18n="timelineItem4Desc">TEKNOFEST Yarışma Haftası</p>
+                </div>
+                <div class="timeline-dot-h"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="team" class="py-16 bg-gradient-to-b from-[#04182b] to-[#03111f] border-t border-[#6E92B6]/30">
+      <div class="max-w-6xl mx-auto px-6">
+        <p class="text-[#6E92B6] text-sm uppercase tracking-[0.2em]">Multidisciplinary</p>
+        <h2 class="text-4xl font-heading mb-10" data-i18n="teamTitle">Disiplinlerarası Teknik Kadromuz</h2>
+        <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <article class="rounded-2xl border border-white/10 bg-white/5 p-5">
+            <div class="flex items-center gap-3 mb-3">
+              <svg class="w-10 h-10 text-[#6E92B6]"><use href="#icon-mekanik"></use></svg>
+              <h3 class="text-2xl" data-i18n="teamCard1Title">Mekanik Ekibi</h3>
+            </div>
+            <p class="text-timberwolf/80" data-i18n="teamCard1Text">Uydunun ana şasisi...</p>
+          </article>
+          <article class="rounded-2xl border border-white/10 bg-white/5 p-5">
+            <div class="flex items-center gap-3 mb-3">
+              <svg class="w-10 h-10 text-[#6E92B6]"><use href="#icon-elektronik"></use></svg>
+              <h3 class="text-2xl" data-i18n="teamCard2Title">Elektronik Ekibi</h3>
+            </div>
+            <p class="text-timberwolf/80" data-i18n="teamCard2Text">Güç dağıtım kartları...</p>
+          </article>
+          <article class="rounded-2xl border border-white/10 bg-white/5 p-5">
+            <div class="flex items-center gap-3 mb-3">
+              <svg class="w-10 h-10 text-[#6E92B6]"><use href="#icon-ucus"></use></svg>
+              <h3 class="text-2xl" data-i18n="teamCard3Title">Uçuş Yazılımı Ekibi</h3>
+            </div>
+            <p class="text-timberwolf/80" data-i18n="teamCard3Text">Sensör verilerini işleyen...</p>
+          </article>
+          <article class="rounded-2xl border border-white/10 bg-white/5 p-5">
+            <div class="flex items-center gap-3 mb-3">
+              <svg class="w-10 h-10 text-[#6E92B6]"><use href="#icon-yer"></use></svg>
+              <h3 class="text-2xl" data-i18n="teamCard4Title">Yer İstasyonu Ekibi</h3>
+            </div>
+            <p class="text-timberwolf/80" data-i18n="teamCard4Text">Uydudan gelen verileri almak...</p>
+          </article>
+          <article class="rounded-2xl border border-white/10 bg-white/5 p-5 lg:col-span-2">
+            <div class="flex items-center gap-3 mb-3">
+              <svg class="w-10 h-10 text-[#6E92B6]"><use href="#icon-org"></use></svg>
+              <h3 class="text-2xl" data-i18n="teamCard5Title">Organizasyon & Tasarım Ekibi</h3>
+            </div>
+            <p class="text-timberwolf/80" data-i18n="teamCard5Text">Proje yönetimini...</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="sponsor" class="py-16 md:py-20 bg-gradient-to-b from-[#03111f] to-[#030b15] border-t border-[#6E92B6]/30">
+      <div class="max-w-6xl mx-auto px-6 space-y-12">
+        <div class="rounded-3xl border border-[#6E92B6]/40 bg-prussian_blue/60 p-8 flex flex-col md:flex-row gap-6 md:items-center">
+          <div class="flex-1">
+            <p class="text-sm uppercase tracking-[0.3em] text-blue_gray">Partnerships</p>
+            <h2 class="text-3xl font-heading mt-2" data-i18n="sponsorIntroTitle">Vizyonumuza Ortak Olun</h2>
+            <p class="text-timberwolf/80 mt-3" data-i18n="sponsorIntroSubtitle">Türkiye'nin Milli Teknoloji Hamlesi...</p>
+          </div>
+          <a href="./metadata.json" class="self-start md:self-auto inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-blue_gray text-prussian_blue font-semibold" download data-i18n="sponsorIntroBtn">Sponsorluk Dosyasını İndir</a>
+        </div>
+        <div>
+          <h3 class="text-3xl font-heading mb-8" data-i18n="sponsorTiersTitle">Sponsorluk Paketleri</h3>
+          <div class="grid gap-6 md:grid-cols-3">
+            <article class="rounded-2xl border border-[#6E92B6]/40 bg-white/5 p-6 relative">
+              <span class="absolute -top-3 right-4 px-3 py-1 text-xs rounded-full bg-blue_gray text-prussian_blue font-semibold" data-i18n="sponsorTierPlatinumBadge">En Popüler</span>
+              <h4 class="text-2xl font-heading mb-3" data-i18n="sponsorTierPlatinumTitle">Platin</h4>
+              <ul class="space-y-2 text-timberwolf/80">
+                <li data-i18n="sponsorTierPlatinumBenefit1">Logonuzun uydumuz üzerinde yer alması</li>
+                <li data-i18n="sponsorTierPlatinumBenefit2">Tüm sosyal medya...</li>
+                <li data-i18n="sponsorTierPlatinumBenefit3">Şirketinize özel tanıtım etkinlikleri</li>
+                <li data-i18n="sponsorTierPlatinumBenefit4">İşe alım süreçlerinde öncelikli yetenek</li>
+              </ul>
+            </article>
+            <article class="rounded-2xl border border-[#6E92B6]/30 bg-white/5 p-6">
+              <h4 class="text-2xl font-heading mb-3" data-i18n="sponsorTierGoldTitle">Altın</h4>
+              <ul class="space-y-2 text-timberwolf/80">
+                <li data-i18n="sponsorTierGoldBenefit1">Sosyal medya ve web sitesinde logonuz</li>
+                <li data-i18n="sponsorTierGoldBenefit2">Tanıtım materyallerinde yer alma</li>
+                <li data-i18n="sponsorTierGoldBenefit3">Kariyer günlerinde stant açma önceliği</li>
+              </ul>
+            </article>
+            <article class="rounded-2xl border border-[#6E92B6]/20 bg-white/5 p-6">
+              <h4 class="text-2xl font-heading mb-3" data-i18n="sponsorTierSilverTitle">Gümüş</h4>
+              <ul class="space-y-2 text-timberwolf/80">
+                <li data-i18n="sponsorTierSilverBenefit1">Web sitemizde yer alma</li>
+                <li data-i18n="sponsorTierSilverBenefit2">Sosyal medyada toplu teşekkür</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+        <div class="rounded-2xl border border-[#6E92B6]/40 bg-white/5 p-6 text-center">
+          <h3 class="text-2xl font-heading" data-i18n="sponsorFinalCtaTitle">İş Birliğine Hazır mısınız?</h3>
+          <p class="text-timberwolf/80 mt-2" data-i18n="sponsorFinalCtaText">Detaylı sponsorluk görüşmesi...</p>
+          <a href="#contact" class="mt-4 inline-flex px-5 py-3 rounded-xl bg-blue_gray text-prussian_blue font-semibold">tayf.takimi@itu.edu.tr</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="launches" class="py-16 bg-gradient-to-b from-[#030b15] to-[#02101f] border-t border-[#6E92B6]/30">
+      <div class="max-w-6xl mx-auto px-6 space-y-10">
+        <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+          <div>
+            <p class="text-[11px] uppercase tracking-[0.3em] text-blue_gray" data-i18n="launchesKicker">Uzayı anlık takip ediyoruz</p>
+            <h2 class="text-3xl font-heading" data-i18n="launchesTitle">Yaklaşan Uzay Fırlatmaları</h2>
+            <p class="text-timberwolf/70 mt-1" data-i18n="launchesLead">Dünya genelindeki bazı planlı fırlatmalar...</p>
+          </div>
+          <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-[#6E92B6]/40 text-[11px] font-semibold text-timberwolf/80">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span data-i18n="launchesLiveTag">Gerçek zamanlı veri akışı</span>
+          </span>
+        </div>
+        <div class="grid gap-6 lg:grid-cols-5" data-launch-grid>
+          <div class="lg:col-span-2 space-y-4 rounded-2xl border border-[#6E92B6]/40 bg-white/5 p-4">
+            <div class="flex items-center justify-between">
+              <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#6E92B6]/20 text-xs font-semibold" data-i18n="apodTitle">NASA Günün Uzay Fotoğrafı</span>
+              <span class="text-[11px] text-timberwolf/60" data-i18n="apodSource">Kaynak: NASA...</span>
+            </div>
+            <div class="rounded-xl overflow-hidden bg-prussian_blue/80 aspect-video flex items-center justify-center" data-apod-image>
+              <div class="w-full h-full flex items-center justify-center animate-pulse text-sm text-timberwolf/70" data-apod-status>NASA'dan günün uzay fotoğrafı yükleniyor...</div>
+            </div>
+            <p class="text-sm text-timberwolf/70" data-apod-date></p>
+            <div class="text-sm text-timberwolf/90 max-h-40 overflow-y-auto" data-apod-text></div>
+          </div>
+          <div class="lg:col-span-3 space-y-4">
+            <div class="flex items-center justify-between">
+              <h3 class="text-2xl font-heading" data-i18n="launchesListTitle">Yaklaşan fırlatmalar</h3>
+              <button class="text-sm text-[#6E92B6] hover:underline" data-launch-toggle hidden>...</button>
+            </div>
+            <div class="grid gap-4 md:grid-cols-2" data-launch-list></div>
+            <p class="text-sm text-timberwolf/70" data-launch-status></p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="join" class="py-16 bg-gradient-to-b from-[#02101f] to-[#01070e] border-t border-[#6E92B6]/30">
+      <div class="max-w-6xl mx-auto px-6 grid lg:grid-cols-2 gap-10 items-center">
+        <div>
+          <p class="text-[#6E92B6] text-sm uppercase tracking-[0.3em]">Takım</p>
+          <h2 class="text-3xl font-heading" data-i18n="joinTitle">Takıma Katıl</h2>
+          <p class="text-timberwolf/80 mt-3" data-i18n="joinLead">Her gezegen bir ekip...</p>
+          <ul class="mt-6 space-y-3 text-timberwolf/80">
+            <li>• <span data-i18n="joinItem1">Gerçek donanım üzerinde uçtan uca deneyim</span></li>
+            <li>• <span data-i18n="joinItem2">Yarışma standardında süreç ve dokümantasyon</span></li>
+            <li>• <span data-i18n="joinItem3">Atölye imkânı ve mentor desteği</span></li>
+            <li>• <span data-i18n="joinItem4">Sektörle erken tanışma ve referans</span></li>
+          </ul>
+        </div>
+        <div class="space-y-6">
+          <div class="solar">
+            <div class="orbit-ring" style="--orbit-scale:0.35"></div>
+            <div class="orbit-ring" style="--orbit-scale:0.55"></div>
+            <div class="orbit-ring" style="--orbit-scale:0.75"></div>
+            <div class="orbit-ring" style="--orbit-scale:0.95"></div>
+            <div class="orbit-wrapper" style="--orbit-scale:0.35; --dur:32s">
+              <div class="planet" title="Mekanik">
+                <svg class="planet-icon"><use href="#icon-mekanik"></use></svg>
+              </div>
+            </div>
+            <div class="orbit-wrapper" style="--orbit-scale:0.55; --dur:36s">
+              <div class="planet" title="Elektronik">
+                <svg class="planet-icon"><use href="#icon-elektronik"></use></svg>
+              </div>
+            </div>
+            <div class="orbit-wrapper" style="--orbit-scale:0.75; --dur:42s">
+              <div class="planet" title="Yazılım">
+                <svg class="planet-icon"><use href="#icon-ucus"></use></svg>
+              </div>
+            </div>
+            <div class="orbit-wrapper" style="--orbit-scale:0.95; --dur:48s">
+              <div class="planet" title="Yer & Organizasyon">
+                <svg class="planet-icon"><use href="#icon-org"></use></svg>
+              </div>
+            </div>
+          </div>
+          <div class="flex flex-wrap gap-3 md:justify-center">
+            <a href="mailto:tayf.takimi@itu.edu.tr" class="join-card">CV Gönder</a>
+            <a href="https://www.instagram.com/itutayf/" target="_blank" rel="noopener" class="join-card">Instagram</a>
+            <a href="https://www.linkedin.com/company/itutayf" target="_blank" rel="noopener" class="join-card">LinkedIn</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="py-16 bg-[#01070e] border-t border-[#6E92B6]/30">
+      <div class="max-w-4xl mx-auto px-6 text-center space-y-6">
+        <p class="text-[#6E92B6] text-sm uppercase tracking-[0.3em]">İletişim</p>
+        <h2 class="text-4xl font-heading" data-i18n="contactTitle">İletişime Geçin</h2>
+        <p class="text-timberwolf/80" data-i18n="contactText">Projemiz hakkında daha fazla bilgi...</p>
+        <a href="mailto:tayf.takimi@itu.edu.tr" class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-blue_gray text-prussian_blue font-semibold" data-i18n="contactSendEmail">E-posta Gönder</a>
+        <div class="flex justify-center gap-6 text-sm text-timberwolf/70">
+          <a href="mailto:tayf.takimi@itu.edu.tr" data-i18n="contactLead">tayf.takimi@itu.edu.tr</a>
+        </div>
+        <div class="flex justify-center gap-4">
+          <a href="https://www.linkedin.com/company/itutayf" class="p-3 rounded-full border border-white/10 hover:border-[#6E92B6]/60" target="_blank" rel="noopener" aria-label="LinkedIn" data-i18n-attr data-i18n-attr="aria-label" data-i18n-key="contactLinkedInAriaLabel">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M4.98 3.5C4.98 4.88 3.88 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM.5 8h4V24h-4zM8.5 8h3.8v2.2h.06c.53-1 1.82-2.2 3.75-2.2 4.01 0 4.75 2.64 4.75 6.07V24h-4v-7.73c0-1.84-.03-4.21-2.56-4.21-2.57 0-2.96 2-2.96 4.07V24h-4z" />
+            </svg>
+          </a>
+          <a href="https://www.instagram.com/itutayf/" class="p-3 rounded-full border border-white/10 hover:border-[#6E92B6]/60" target="_blank" rel="noopener" aria-label="Instagram" data-i18n-attr data-i18n-attr="aria-label" data-i18n-key="contactInstagramAriaLabel">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="py-6 border-t border-white/10 text-center text-sm text-timberwolf/60">
+    <p data-i18n="footerCopyright">© 2025 İTÜ TAYF Proje Takımı. Tüm hakları saklıdır.</p>
+  </footer>
+
   <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
     <symbol id="icon-mekanik" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
     </symbol>
     <symbol id="icon-elektronik" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 9h6v6H9V9z"/>
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2z" />
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 9h6v6H9z" />
     </symbol>
     <symbol id="icon-ucus" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
     </symbol>
     <symbol id="icon-yer" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0"/>
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0" />
     </symbol>
     <symbol id="icon-org" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0"/>
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0" />
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
     </symbol>
   </svg>
-  <script type="text/babel" data-type="module" data-presets="react,typescript" src="./index.tsx"></script>
+  <script>
+    const langData = {
+      tr: {
+        navProject: "Proje",
+        navTeam: "Ekip",
+        navSponsor: "Sponsorluk",
+        navContact: "İletişim",
+        navJoin: "Takıma Katıl",
+        heroTitle: "İTÜ TAYF: Yörüngedeki İmzamız",
+        heroSubtitle: "İstanbul Teknik Üniversitesi Uçak ve Uzay Bilimleri Fakültesi bünyesinde, TEKNOFEST için uydu teknolojileri geliştiriyoruz.",
+        heroBtnProject: "Projemizi Keşfedin",
+        heroBtnSponsor: "Bize Destek Olun (Sponsorluk)",
+        projectTitle: "TEKNOFEST Model Uydu Projemiz",
+        projectText: "İTÜ Tayf ekibi, havacılık ve uzay sektöründe özellikle haberleşme teknolojileri alanında kendini geliştirmeyi ve bu yönde ürünler üretmeyi vizyon olarak belirlemiştir. 2024–2025 döneminde Teknofest Model Uydu Yarışması’na hazırlanırken, gelecekte Amerika ve Avrupa’daki çeşitli model uydu yarışmalarına katılmayı hedeflemektedir. Ayrıca, üzerinde çalıştığı yenilikçi AR-GE projeleri ile sektörde öncü olmayı ve bu projeleri girişime dönüştürmeyi amaçlamaktadır.",
+        galleryTitle: "Uydu Modelimiz",
+        projectAchievementsTitle: "Başarılarımız",
+        ach1: "2023 Teknofest Model Uydu: DR (Design Review) raporundan 96.5/100 puan.",
+        ach2: "2022’de kuruldu; disiplinler arası ekip yapısı ve süreçler oluşturuldu.",
+        ach3: "2024–2025’te uydumuzu önemli ölçüde geliştirdik; önceki deneyimlerden öğrenerek bu yıl daha güçlü bir katılım için hazırlandık.",
+        projectGoalsTitle: "Hedeflerimiz",
+        goal1: "2025–2026’ta ABD/Avrupa’daki CanSat ve benzeri model uydu yarışmalarına katılım.",
+        goal2: "TEKNOFEST Model Uydu’da daha güçlü bir geri dönüş ve uçtan uca uçuşa hazır entegrasyon.",
+        goal3: "Yeni AR-GE projelerini ticarileştirip girişime dönüştürmek (ör. haberleşme/electronics pod).",
+        badgeFounded: "Kuruluş: 2022",
+        badgeDRScorePrefix: "DR Skoru: ",
+        tabGallery: "Galeri",
+        tab3D: "3B Model",
+        hintPan: "İpucu: Parmağınızla çevirin, iki parmakla yakınlaştırın.",
+        projectTimelineTitle: "Proje Takvimi",
+        timelineItem1Date: "23 Ocak",
+        timelineItem1Desc: "Şartname Yayını",
+        timelineItem2Date: "1 Mayıs",
+        timelineItem2Desc: "Kritik Tasarım Raporu (KTR)",
+        timelineItem3Date: "10 Mayıs",
+        timelineItem3Desc: "Uçuşa Hazırlık Raporu (UHR)",
+        timelineItem4Date: "20 Ağustos",
+        timelineItem4Desc: "TEKNOFEST Yarışma Haftası",
+        teamTitle: "Disiplinlerarası Teknik Kadromuz",
+        teamCard1Title: "Mekanik Ekibi",
+        teamCard1Text: "Uydunun ana şasisini, yük taşıyıcı sistemlerini ve fırlatma ortamının zorlu koşullarına dayanacak yapısal bütünlüğü tasarlar ve üretir.",
+        teamCard2Title: "Elektronik Ekibi",
+        teamCard2Text: "Güç dağıtım kartları, telemetri sensörleri ve ana uçuş bilgisayarı dahil olmak üzere tüm aviyonik sistemlerin tasarımından ve entegrasyonundan sorumludur.",
+        teamCard3Title: "Uçuş Yazılımı Ekibi",
+        teamCard3Text: "Sensör verilerini işleyen, telemetri paketlerini oluşturan ve yer istasyonu komutlarını yürüten gömülü yazılımı geliştirir.",
+        teamCard4Title: "Yer İstasyonu Ekibi",
+        teamCard4Text: "Uydudan gelen verileri almak, işlemek ve komutları uydumuza iletmek için gerekli anten ve yazılım altyapısını kurar ve yönetir.",
+        teamCard5Title: "Organizasyon & Tasarım Ekibi",
+        teamCard5Text: "Proje yönetimini, lojistiği, kurumsal ilişkileri ve sponsorluk süreçlerini yürüterek teknik ekibin önünü açar.",
+        sponsorIntroTitle: "Vizyonumuza Ortak Olun",
+        sponsorIntroSubtitle: "Türkiye'nin Milli Teknoloji Hamlesi'ne katkıda bulunacak genç mühendislere yatırım yapın. Sektör liderleriyle iş birliği yapmaya ve geleceğin teknolojilerini birlikte geliştirmeye hazırız.",
+        sponsorIntroBtn: "Sponsorluk Dosyasını İndir",
+        sponsorTiersTitle: "Sponsorluk Paketleri",
+        sponsorTierPlatinumTitle: "Platin",
+        sponsorTierPlatinumBadge: "En Popüler",
+        sponsorTierPlatinumBenefit1: "Logonuzun uydumuz üzerinde yer alması",
+        sponsorTierPlatinumBenefit2: "Tüm sosyal medya ve basılı materyallerde ana sponsor olarak yer alma",
+        sponsorTierPlatinumBenefit3: "Şirketinize özel tanıtım etkinlikleri ve atölyeler",
+        sponsorTierPlatinumBenefit4: "İşe alım süreçlerinde öncelikli yetenek havuzuna erişim",
+        sponsorTierGoldTitle: "Altın",
+        sponsorTierGoldBenefit1: "Sosyal medya ve web sitesinde logonuzun yer alması",
+        sponsorTierGoldBenefit2: "Tanıtım materyallerinde belirgin şekilde yer alma",
+        sponsorTierGoldBenefit3: "Kariyer günlerinde stant açma önceliği",
+        sponsorTierSilverTitle: "Gümüş",
+        sponsorTierSilverBenefit1: "Web sitemizde 'Destekçilerimiz' bölümünde yer alma",
+        sponsorTierSilverBenefit2: "Sosyal medyada toplu teşekkür paylaşımlarında yer alma",
+        sponsorFinalCtaTitle: "İş Birliğine Hazır mısınız?",
+        sponsorFinalCtaText: "Detaylı sponsorluk görüşmesi, özel paketler veya sorularınız için doğrudan bizimle iletişime geçebilirsiniz.",
+        launchesKicker: "Uzayı anlık takip ediyoruz",
+        launchesTitle: "Yaklaşan Uzay Fırlatmaları",
+        launchesLead: "Dünya genelindeki bazı planlı fırlatmalar (UTC+3, İstanbul saati).",
+        launchesLiveTag: "Gerçek zamanlı veri akışı",
+        launchesListTitle: "Yaklaşan fırlatmalar",
+        launchesLoading: "Fırlatma bilgileri yükleniyor...",
+        launchesEmpty: "Şu anda listelenecek planlı fırlatma bulunamadı.",
+        launchesError: "Fırlatma bilgileri yüklenirken bir hata oluştu. Daha sonra tekrar deneyin.",
+        launchesShowMore: "Daha Fazla Göster",
+        launchesShowLess: "Daha Az Göster",
+        launchesTimeLabel: "Fırlatma zamanı (İstanbul, UTC+3)",
+        launchesOperatorLabel: "Operatör",
+        launchesLocationLabel: "Konum",
+        launchesMissionLabel: "Görev",
+        launchesUnknownName: "Bilinmeyen Fırlatma",
+        launchesUnknownOperator: "Bilinmeyen operatör",
+        launchesUnknownLocation: "Bilinmeyen konum",
+        launchesNoDate: "Tarih açıklanmadı",
+        apodTitle: "NASA Günün Uzay Fotoğrafı",
+        apodSource: "Kaynak: NASA Astronomy Picture of the Day (APOD)",
+        apodDateLabel: "Tarih",
+        apodLoading: "NASA'dan günün uzay fotoğrafı yükleniyor...",
+        apodError: "NASA'dan fotoğraf alınırken bir hata oluştu.",
+        apodNoImage: "Bugünkü APOD bir görüntü değil (video veya başka bir medya türü).",
+        apodFallbackText: "NASA'dan görsel yüklenemedi.",
+        joinTitle: "Takıma Katıl",
+        joinLead: "Her gezegen bir ekip: rolünü seç, yörüngeye katıl.",
+        joinItem1: "Gerçek donanım üzerinde uçtan uca deneyim",
+        joinItem2: "Yarışma standardında süreç ve dokümantasyon",
+        joinItem3: "Atölye imkânı ve mentor desteği",
+        joinItem4: "Sektörle erken tanışma ve referans",
+        contactTitle: "İletişime Geçin",
+        contactText: "Projemiz hakkında daha fazla bilgi almak veya iş birliği fırsatlarını görüşmek için bize ulaşın.",
+        contactSendEmail: "E-posta Gönder",
+        contactLead: "tayf.takimi@itu.edu.tr",
+        contactLinkedInAriaLabel: "LinkedIn - İTÜ TAYF",
+        contactInstagramAriaLabel: "Instagram - İTÜ TAYF",
+        menuAriaLabel: "Menü",
+        logoAlt: "İTÜ TAYF Logosu",
+        rocketAlt: "Roket fotoğrafı",
+        footerCopyright: "© 2025 İTÜ TAYF Proje Takımı. Tüm hakları saklıdır.",
+        metricsTest: "Uçuş/Yer testi",
+        metricsAccess: "Yıllık erişim",
+        metricsMembers: "Aktif üye",
+        metricsPartners: "Sanayi ortağı",
+        metricsHours: "Atolye saati / dönem",
+        projectImageAlt1: "Uydu render – ön görünüm",
+        projectImageAlt2: "Uydu render – detay",
+        projectImageAlt3: "Uydu render – yanal görünüm",
+        projectImageAlt4: "Uydu render – bileşen yakın plan",
+        projectImageAlt5: "Uydu render – genel görünüm"
+      },
+      en: {
+        navProject: "Project",
+        navTeam: "Team",
+        navSponsor: "Sponsorship",
+        navContact: "Contact",
+        navJoin: "Join the Team",
+        heroTitle: "İTÜ TAYF: Our Signature in Orbit",
+        heroSubtitle: "Developing advanced satellite technology for TEKNOFEST within the ITU Faculty of Aeronautics and Astronautics.",
+        heroBtnProject: "Discover Our Project",
+        heroBtnSponsor: "Support Us (Sponsorship)",
+        projectTitle: "Our TEKNOFEST Model Satellite Project",
+        projectText: "ITU Tayf’s vision is to develop products in aerospace—especially in communications technologies. While preparing for the TEKNOFEST Model Satellite Competition in 2024–2025, we aim to participate in various model satellite competitions in the US and Europe. We also plan to lead with innovative R&D projects and turn them into ventures.",
+        galleryTitle: "Our Satellite Model",
+        projectAchievementsTitle: "Our Achievements",
+        ach1: "TEKNOFEST 2023 Model Satellite: 96.5/100 in the Design Review (DR) report.",
+        ach2: "Founded in 2022; built a cross-disciplinary team and processes.",
+        ach3: "In 2024–2025 we significantly improved our satellite; leveraging past experience to compete much stronger this year.",
+        projectGoalsTitle: "Our Goals",
+        goal1: "Join US/EU CanSat and similar competitions in 2025–2026.",
+        goal2: "A stronger return to TEKNOFEST with end-to-end, flight-ready integration.",
+        goal3: "Commercialize new R&D projects (e.g., comms/electronics pod) into a startup.",
+        badgeFounded: "Founded: 2022",
+        badgeDRScorePrefix: "DR Score: ",
+        tabGallery: "Gallery",
+        tab3D: "3D Model",
+        hintPan: "Tip: Drag to rotate, pinch to zoom.",
+        projectTimelineTitle: "Project Timeline",
+        timelineItem1Date: "January 23",
+        timelineItem1Desc: "Release of Specifications",
+        timelineItem2Date: "May 1",
+        timelineItem2Desc: "Critical Design Report (CDR)",
+        timelineItem3Date: "May 10",
+        timelineItem3Desc: "Flight Readiness Report (FRR)",
+        timelineItem4Date: "August 20",
+        timelineItem4Desc: "TEKNOFEST Competition Week",
+        teamTitle: "Our Interdisciplinary Technical Team",
+        teamCard1Title: "Mechanical Team",
+        teamCard1Text: "Designs and manufactures the satellite's main chassis, payload systems, and structural integrity for launch conditions.",
+        teamCard2Title: "Electronics Team",
+        teamCard2Text: "Responsible for the design and integration of avionics including power boards, telemetry sensors, and the flight computer.",
+        teamCard3Title: "Flight Software Team",
+        teamCard3Text: "Develops embedded software that processes sensor data, builds telemetry packets, and executes ground-station commands.",
+        teamCard4Title: "Ground Station Team",
+        teamCard4Text: "Builds and manages the antenna and software infrastructure to receive data from the satellite and send commands.",
+        teamCard5Title: "Organization & Design Team",
+        teamCard5Text: "Manages project timelines, logistics, corporate relations, and sponsorship processes, clearing the path for engineers.",
+        sponsorIntroTitle: "Partner With Our Vision",
+        sponsorIntroSubtitle: "Invest in the young engineers who will contribute to Turkey's National Technology Initiative. We're ready to co-develop future technologies with industry leaders.",
+        sponsorIntroBtn: "Download Sponsorship Deck",
+        sponsorTiersTitle: "Sponsorship Packages",
+        sponsorTierPlatinumTitle: "Platinum",
+        sponsorTierPlatinumBadge: "Most Popular",
+        sponsorTierPlatinumBenefit1: "Your logo featured prominently on our satellite",
+        sponsorTierPlatinumBenefit2: "Main sponsor recognition across social and printed media",
+        sponsorTierPlatinumBenefit3: "Exclusive promotional events and workshops for your company",
+        sponsorTierPlatinumBenefit4: "Priority access to our talent pool for recruitment",
+        sponsorTierGoldTitle: "Gold",
+        sponsorTierGoldBenefit1: "Logo placement on our social channels and website",
+        sponsorTierGoldBenefit2: "Highlighted visibility in promotional materials",
+        sponsorTierGoldBenefit3: "Priority booth placement at career days",
+        sponsorTierSilverTitle: "Silver",
+        sponsorTierSilverBenefit1: "Presence in the 'Supporters' section on our website",
+        sponsorTierSilverBenefit2: "Mentioned in collective social media thank-you posts",
+        sponsorFinalCtaTitle: "Ready to Collaborate?",
+        sponsorFinalCtaText: "For detailed sponsorship talks, tailored packages, or questions, reach us directly.",
+        launchesKicker: "Tracking space, in real-time",
+        launchesTitle: "Upcoming Space Launches",
+        launchesLead: "A selection of planned launches worldwide (UTC+3, Istanbul time).",
+        launchesLiveTag: "Live data feed",
+        launchesListTitle: "Upcoming launches",
+        launchesLoading: "Loading launch data...",
+        launchesEmpty: "No scheduled launches to display at the moment.",
+        launchesError: "An error occurred while loading launch data. Please try again later.",
+        launchesShowMore: "Show More",
+        launchesShowLess: "Show Less",
+        launchesTimeLabel: "Launch time (Istanbul, UTC+3)",
+        launchesOperatorLabel: "Operator",
+        launchesLocationLabel: "Location",
+        launchesMissionLabel: "Mission",
+        launchesUnknownName: "Unknown Launch",
+        launchesUnknownOperator: "Unknown operator",
+        launchesUnknownLocation: "Unknown location",
+        launchesNoDate: "Date not announced",
+        apodTitle: "NASA Picture of the Day",
+        apodSource: "Source: NASA Astronomy Picture of the Day (APOD)",
+        apodDateLabel: "Date",
+        apodLoading: "Loading NASA's Picture of the Day...",
+        apodError: "An error occurred fetching the NASA picture.",
+        apodNoImage: "Today's APOD is not an image (it may be a video).",
+        apodFallbackText: "Could not load image from NASA.",
+        joinTitle: "Join the Team",
+        joinLead: "Every planet is a team: choose your role, join the orbit.",
+        joinItem1: "Hands-on, end-to-end hardware experience",
+        joinItem2: "Competition-grade processes & documentation",
+        joinItem3: "Workshop access and mentoring",
+        joinItem4: "Early industry exposure and references",
+        contactTitle: "Get In Touch",
+        contactText: "Contact us to learn more about our project or discuss partnership opportunities.",
+        contactSendEmail: "Send Email",
+        contactLead: "tayf.takimi@itu.edu.tr",
+        contactLinkedInAriaLabel: "LinkedIn - ITU TAYF",
+        contactInstagramAriaLabel: "Instagram - ITU TAYF",
+        menuAriaLabel: "Menu",
+        logoAlt: "ITU TAYF Logo",
+        rocketAlt: "Rocket photo",
+        footerCopyright: "© 2025 ITU TAYF Project Team. All rights reserved.",
+        metricsTest: "Flight/Ground tests",
+        metricsAccess: "Annual reach",
+        metricsMembers: "Active members",
+        metricsPartners: "Industry partners",
+        metricsHours: "Workshop hours / semester",
+        projectImageAlt1: "Satellite render - front view",
+        projectImageAlt2: "Satellite render - detail",
+        projectImageAlt3: "Satellite render - side view",
+        projectImageAlt4: "Satellite render - component closeup",
+        projectImageAlt5: "Satellite render - overview"
+      }
+    };
+    const LAUNCH_API_URL = 'https://ll.thespacedevs.com/2.2.0/launch/upcoming/?limit=10&related=false';
+    const APOD_API_URL = 'https://api.nasa.gov/planetary/apod?api_key=EJbHG3NHr8CJWHTCAieoCjd2P2aqBXRG8GTRHbsR&thumbs=true';
+    const appState = {
+      launches: { items: [], status: 'loading', showAll: false },
+      apod: { data: null, status: 'loading' }
+    };
+    let currentLang = 'tr';
+
+    const getText = (key) => (langData[currentLang] && langData[currentLang][key]) || langData.tr[key] || '';
+
+    const applyTranslations = () => {
+      document.documentElement.lang = currentLang === 'tr' ? 'tr' : 'en';
+      document.querySelectorAll('[data-i18n]').forEach((el) => {
+        const key = el.dataset.i18n;
+        if (!key) return;
+        el.textContent = getText(key);
+      });
+      document.querySelectorAll('[data-i18n-attr]').forEach((el) => {
+        const attr = el.dataset.i18nAttr;
+        const key = el.dataset.i18nKey;
+        if (!attr || !key) return;
+        el.setAttribute(attr, getText(key));
+      });
+      document.querySelectorAll('[data-lang-toggle]').forEach((btn) => {
+        const lang = btn.dataset.langToggle;
+        const isActive = lang === currentLang;
+        btn.classList.toggle('text-timberwolf', isActive);
+        btn.classList.toggle('text-timberwolf/70', !isActive);
+        btn.setAttribute('aria-pressed', String(isActive));
+      });
+      const toggleBtn = document.querySelector('[data-launch-toggle]');
+      if (toggleBtn) {
+        toggleBtn.textContent = appState.launches.showAll ? getText('launchesShowLess') : getText('launchesShowMore');
+      }
+      renderLaunches();
+      renderApod();
+    };
+
+    const setLanguage = (lang) => {
+      if (!langData[lang]) return;
+      currentLang = lang;
+      applyTranslations();
+    };
+
+    const initLangButtons = () => {
+      document.querySelectorAll('[data-lang-toggle]').forEach((btn) => {
+        btn.addEventListener('click', () => setLanguage(btn.dataset.langToggle || 'tr'));
+      });
+    };
+
+    const initMenu = () => {
+      const menu = document.querySelector('[data-mobile-menu]');
+      const backdrop = document.querySelector('[data-menu-backdrop]');
+      const toggles = document.querySelectorAll('[data-menu-toggle]');
+      if (!menu || !backdrop) return;
+      const setOpen = (open) => {
+        menu.classList.toggle('translate-x-0', open);
+        menu.classList.toggle('translate-x-full', !open);
+        backdrop.classList.toggle('opacity-100', open);
+        backdrop.classList.toggle('pointer-events-auto', open);
+        backdrop.classList.toggle('opacity-0', !open);
+        backdrop.classList.toggle('pointer-events-none', !open);
+      };
+      toggles.forEach((btn) => btn.addEventListener('click', () => setOpen(!menu.classList.contains('translate-x-0'))));
+      backdrop.addEventListener('click', () => setOpen(false));
+      menu.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => setOpen(false)));
+    };
+
+    const initTabs = () => {
+      const buttons = document.querySelectorAll('[data-tab]');
+      const panels = document.querySelectorAll('[data-tab-panel]');
+      buttons.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const target = btn.dataset.tab;
+          buttons.forEach((b) => {
+            const isActive = b === btn;
+            b.classList.toggle('bg-[#6E92B6]/20', isActive);
+            b.classList.toggle('border-[#6E92B6]/40', isActive);
+          });
+          panels.forEach((panel) => {
+            panel.classList.toggle('hidden', panel.dataset.tabPanel !== target);
+          });
+        });
+      });
+    };
+
+    const initCounters = () => {
+      const counters = document.querySelectorAll('[data-countup]');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const el = entry.target;
+          observer.unobserve(el);
+          const target = parseFloat(el.dataset.countupTarget || '0');
+          const decimals = parseInt(el.dataset.countupDecimals || '0', 10);
+          const useCompact = el.dataset.countupCompact === 'true';
+          const duration = 1200;
+          let start = null;
+          const formatter = useCompact
+            ? new Intl.NumberFormat(currentLang === 'en' ? 'en-US' : 'tr-TR', { notation: 'compact', maximumFractionDigits: 1 })
+            : null;
+          const animate = (timestamp) => {
+            if (!start) start = timestamp;
+            const progress = Math.min((timestamp - start) / duration, 1);
+            const value = target * progress;
+            el.textContent = useCompact
+              ? formatter.format(value)
+              : value.toFixed(decimals).replace(/\.0+$/, '');
+            if (progress < 1) {
+              requestAnimationFrame(animate);
+            } else {
+              el.textContent = useCompact ? formatter.format(target) : target.toFixed(decimals).replace(/\.0+$/, '');
+            }
+          };
+          requestAnimationFrame(animate);
+        });
+      }, { threshold: 0.4 });
+      counters.forEach((el) => observer.observe(el));
+    };
+
+    const initTimeline = () => {
+      const timeline = document.querySelector('[data-timeline]');
+      if (!timeline) return;
+      const observer = new IntersectionObserver(([entry]) => {
+        if (entry.isIntersecting) {
+          timeline.classList.add('timeline-visible');
+          observer.disconnect();
+        }
+      }, { threshold: 0.3 });
+      observer.observe(timeline);
+    };
+
+    const formatDateIstanbul = (iso) => {
+      try {
+        const d = new Date(iso);
+        if (Number.isNaN(d.getTime())) return iso;
+        return new Intl.DateTimeFormat(currentLang === 'en' ? 'en-GB' : 'tr-TR', {
+          dateStyle: 'medium',
+          timeStyle: 'short',
+          timeZone: 'Europe/Istanbul'
+        }).format(d);
+      } catch {
+        return iso;
+      }
+    };
+
+    const renderLaunches = () => {
+      const listEl = document.querySelector('[data-launch-list]');
+      const statusEl = document.querySelector('[data-launch-status]');
+      const toggleBtn = document.querySelector('[data-launch-toggle]');
+      if (!listEl || !statusEl || !toggleBtn) return;
+      listEl.innerHTML = '';
+      statusEl.textContent = '';
+      toggleBtn.hidden = true;
+      if (appState.launches.status !== 'ready') {
+        const keyMap = {
+          loading: 'launchesLoading',
+          empty: 'launchesEmpty',
+          error: 'launchesError'
+        };
+        statusEl.textContent = getText(keyMap[appState.launches.status] || 'launchesEmpty');
+        return;
+      }
+      if (!appState.launches.items.length) {
+        statusEl.textContent = getText('launchesEmpty');
+        return;
+      }
+      const baseCount = window.innerWidth >= 1280 ? 3 : window.innerWidth >= 640 ? 2 : 1;
+      const maxItems = appState.launches.showAll ? 9 : baseCount;
+      const visible = appState.launches.items.slice(0, maxItems);
+      listEl.innerHTML = visible.map((launch) => {
+        const name = launch.name || getText('launchesUnknownName');
+        const provider = (launch.launch_service_provider && launch.launch_service_provider.name) || getText('launchesUnknownOperator');
+        const location = (launch.pad && (launch.pad.name || (launch.pad.location && launch.pad.location.name))) || getText('launchesUnknownLocation');
+        const windowStart = launch.window_start || launch.net || launch.last_updated;
+        const timeLabel = windowStart ? formatDateIstanbul(windowStart) : getText('launchesNoDate');
+        const mission = launch.mission && launch.mission.name ? `<p class="text-timberwolf/70"><span class="font-semibold">${getText('launchesMissionLabel')}:</span> ${launch.mission.name}</p>` : '';
+        const statusText = launch.status && launch.status.name ? `<span class="inline-flex items-center self-start mt-1 px-2 py-0.5 rounded-full text-xs font-semibold bg-yinmn_blue/70 border border-[#6E92B6]/60">${launch.status.abbrev ? `${launch.status.abbrev} — ` : ''}${launch.status.name}</span>` : '';
+        const imageUrl = launch.image || (launch.rocket && launch.rocket.configuration && launch.rocket.configuration.image_url);
+        const imageMarkup = imageUrl ? `<div class="mb-3 rounded-lg overflow-hidden bg-prussian_blue/80"><img src="${imageUrl}" alt="${getText('rocketAlt')}" class="w-full h-40 object-cover" loading="lazy" /></div>` : '';
+        return `
+          <article class="rounded-xl border border-[#6E92B6]/40 bg-prussian_blue/60 p-4 flex flex-col gap-2 text-sm text-timberwolf">
+            ${imageMarkup}
+            <h3 class="text-base sm:text-lg font-heading">${name}</h3>
+            <p class="text-timberwolf/70"><span class="font-semibold">${getText('launchesOperatorLabel')}:</span> ${provider}</p>
+            <p class="text-timberwolf/70"><span class="font-semibold">${getText('launchesLocationLabel')}:</span> ${location}</p>
+            <p class="text-timberwolf/70"><span class="font-semibold">${getText('launchesTimeLabel')}:</span> ${timeLabel}</p>
+            ${mission}
+            ${statusText}
+          </article>`;
+      }).join('');
+      if (appState.launches.items.length > baseCount) {
+        toggleBtn.hidden = false;
+        toggleBtn.textContent = appState.launches.showAll ? getText('launchesShowLess') : getText('launchesShowMore');
+        toggleBtn.onclick = () => {
+          appState.launches.showAll = !appState.launches.showAll;
+          renderLaunches();
+        };
+      }
+    };
+
+    const fetchLaunches = async () => {
+      appState.launches.status = 'loading';
+      renderLaunches();
+      try {
+        const res = await fetch(LAUNCH_API_URL);
+        if (!res.ok) throw new Error('Launch API error');
+        const data = await res.json();
+        appState.launches.items = data.results || [];
+        appState.launches.status = appState.launches.items.length ? 'ready' : 'empty';
+      } catch (err) {
+        console.error('Launch fetch error', err);
+        appState.launches.status = 'error';
+      }
+      renderLaunches();
+    };
+
+    const renderApod = () => {
+      const imageWrap = document.querySelector('[data-apod-image]');
+      const statusEl = document.querySelector('[data-apod-status]');
+      const textEl = document.querySelector('[data-apod-text]');
+      const dateEl = document.querySelector('[data-apod-date]');
+      if (!imageWrap || !statusEl || !textEl || !dateEl) return;
+      imageWrap.innerHTML = '';
+      statusEl.textContent = '';
+      textEl.textContent = '';
+      dateEl.textContent = '';
+      if (appState.apod.status === 'loading') {
+        statusEl.textContent = getText('apodLoading');
+        imageWrap.appendChild(statusEl);
+        return;
+      }
+      if (appState.apod.status === 'error') {
+        statusEl.textContent = getText('apodError');
+        imageWrap.appendChild(statusEl);
+        return;
+      }
+      if (appState.apod.status === 'no-image') {
+        statusEl.textContent = getText('apodNoImage');
+        imageWrap.appendChild(statusEl);
+        return;
+      }
+      const img = document.createElement('img');
+      img.src = appState.apod.data.url;
+      img.alt = appState.apod.data.title || getText('apodFallbackText');
+      img.className = 'w-full h-full object-cover';
+      imageWrap.appendChild(img);
+      const apodDate = appState.apod.data.date ? new Date(appState.apod.data.date + 'T00:00:00Z') : null;
+      if (apodDate) {
+        const formatted = new Intl.DateTimeFormat(currentLang === 'en' ? 'en-US' : 'tr-TR', { year: 'numeric', month: 'long', day: 'numeric' }).format(apodDate);
+        dateEl.textContent = `${getText('apodDateLabel')}: ${formatted}`;
+      }
+      textEl.textContent = appState.apod.data.explanation || '';
+    };
+
+    const fetchApod = async () => {
+      appState.apod.status = 'loading';
+      renderApod();
+      try {
+        const res = await fetch(APOD_API_URL);
+        if (!res.ok) throw new Error('APOD error');
+        const data = await res.json();
+        if (data.media_type !== 'image') {
+          appState.apod.status = 'no-image';
+        } else {
+          appState.apod.status = 'ready';
+          appState.apod.data = data;
+        }
+      } catch (err) {
+        console.error('APOD fetch error', err);
+        appState.apod.status = 'error';
+      }
+      renderApod();
+    };
+
+    const init = () => {
+      initLangButtons();
+      initMenu();
+      initTabs();
+      initCounters();
+      initTimeline();
+      window.addEventListener('resize', () => renderLaunches());
+      setLanguage('tr');
+      fetchLaunches();
+      fetchApod();
+    };
+
+    document.addEventListener('DOMContentLoaded', init);
+  </script>
 </body>
 </html>
