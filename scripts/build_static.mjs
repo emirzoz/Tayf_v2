@@ -17,6 +17,7 @@ try {
     bundle: true,
     format: 'iife',
     platform: 'browser',
+    format: 'esm',
     target: ['es2022'],
     minify: true,
     sourcemap: false,
