@@ -23,7 +23,7 @@ View your app in AI Studio: https://ai.studio/apps/drive/1hTlZZUYwJfXUr0mulePsF0
 
 The site no longer relies on the Tailwind CDN. All utility classes that exist in
 the React components are captured inside `tailwind_tokens.json` and compiled into
-`src/styles/tailwind-lite.css` via `python scripts/generate_tailwind_lite.py`.
+`styles/tailwind-lite.css` via `python scripts/generate_tailwind_lite.py`.
 
 If you add or remove classes, re-run the script so the generated stylesheet
 stays in sync before building or deploying.

@@ -13,7 +13,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@700&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./src/styles/tailwind-lite.css">
+  <link rel="stylesheet" href="./styles/tailwind-lite.css">
   <style>
     /* Base styles */
     html { scroll-behavior: smooth; }
@@ -284,7 +284,22 @@
     </symbol>
   </svg>
 
-  <!-- The app is bundled by Vite, so we only need to load the compiled entry point -->
-  <script type="module" src="./src/main.tsx"></script>
+  <!-- Load the Vite entry in development, but fall back to the pre-bundled asset in production/static hosting -->
+  <script type="module">
+    const hostname = window.location.hostname;
+    const isLocalDev = hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '::1';
+    const entry = isLocalDev ? './src/main.tsx' : './assets/app.js';
+
+    import(entry).catch((error) => {
+      console.error('İTÜ TAYF uygulaması yüklenemedi.', error);
+      const root = document.getElementById('root');
+      if (root) {
+        const errorMessage = document.createElement('p');
+        errorMessage.className = 'mt-4 text-red-200 text-sm';
+        errorMessage.textContent = 'Uygulama yüklenirken bir hata oluştu. Lütfen sayfayı yenileyin.';
+        root.appendChild(errorMessage);
+      }
+    });
+  </script>
 </body>
 </html>

@@ -5,7 +5,7 @@ import re
 from typing import Optional
 
 TOKENS_PATH = pathlib.Path('tailwind_tokens.json')
-OUTPUT_PATH = pathlib.Path('src/styles/tailwind-lite.css')
+OUTPUT_PATH = pathlib.Path('styles/tailwind-lite.css')
 OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
 
 color_map = {
