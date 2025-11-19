@@ -578,7 +578,7 @@ def main():
             rules.append(css)
         else:
             missing.append(token)
-    OUTPUT_PATH.write_text('\\n'.join(rules))
+    OUTPUT_PATH.write_text('\n'.join(rules) + '\n')
     if missing:
         print('Missing tokens:', ', '.join(missing))
 
