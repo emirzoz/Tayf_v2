@@ -15,6 +15,8 @@ try {
   await build({
     entryPoints: [entryFile],
     bundle: true,
+    format: 'iife',
+    platform: 'browser',
     format: 'esm',
     target: ['es2022'],
     minify: true,
